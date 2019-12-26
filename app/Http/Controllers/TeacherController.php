@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Teacher;
+use Illuminate\Http\Request;
+
 class TeacherController extends Controller
 {
     /**
@@ -16,18 +19,23 @@ class TeacherController extends Controller
 
     public function index()
     {
-        return __METHOD__;
+        $teachers = Teacher::all();
+
+        return $this->createSuccessResponse($teachers, 200);
     }
 
-    public function store()
+    public function show($id)
     {
-        return __METHOD__;
+        $teacher = Teacher::find($id);
+
+        if($teacher)
+        {
+            return $this->createSuccessResponse($teacher, 200);
+        }
+
+        return $this->createErrorResponse("The teacher whith id {$id}, does not exists", 404);
     }
 
-    public function show()
-    {
-        return __METHOD__;
-    }
 
     public function update()
     {
