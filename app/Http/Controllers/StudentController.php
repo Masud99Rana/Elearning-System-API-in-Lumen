@@ -36,8 +36,16 @@ class StudentController extends Controller
         return $this->createErrorResponse("The student whith id {$id}, does not exists", 404);
     }
 
+    public function store(Request $request)
+    {
+        $this->validateRequest($request);
 
-    public function update()
+        $student = Student::create($request->all());
+
+        return $this->createSuccessResponse("The student with id {$student->id} has been created", 201);
+    }
+
+    public function update(Request $request)
     {
         return __METHOD__;
     }
@@ -45,5 +53,18 @@ class StudentController extends Controller
     public function destroy()
     {
         return __METHOD__;
+    }
+
+    function validateRequest($request)
+    {
+        $rules =
+        [
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'career' => 'required|in:engineering,math,physics'
+        ];
+
+        $this->validate($request, $rules);
     }
 }

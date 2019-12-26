@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -16,8 +17,9 @@ class Controller extends BaseController
     	return response()->json(['message' => $message, 'code' => $code], $code);
     }
 
-    protected function passFailedValidationResponse(Request $request, array $errors)
+    protected function buildFailedValidationResponse(Request $request, array $errors)
     {
         return $this->createErrorResponse($errors, 422);
     }
+    
 }

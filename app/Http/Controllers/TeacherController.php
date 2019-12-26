@@ -37,13 +37,30 @@ class TeacherController extends Controller
     }
 
 
-    public function update()
+    public function store(Request $request)
     {
-        return __METHOD__;
+        $this->validateRequest($request);
+
+        $teacher = Teacher::create($request->all());
+
+        return $this->createSuccessResponse("The teacher with id {$teacher->id} has been created", 201);
     }
 
     public function destroy()
     {
         return __METHOD__;
+    }
+
+    function validateRequest($request)
+    {
+        $rules =
+        [
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'profession' => 'required|in:engineering,math,physics'
+        ];
+
+        $this->validate($request, $rules);
     }
 }
